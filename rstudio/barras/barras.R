@@ -4,6 +4,7 @@ library(scales)
 library(lubridate)
 library(showtext)
 library(openxlsx)
+library(svglite)
 
 # orientación horizontal o vertical
 usar_coord_flip <- FALSE
@@ -42,7 +43,7 @@ datos_wide <- tibble(
   )
 
 # Convertir a formato long
-datos_long <- datos %>%
+datos_long <- datos_wide %>%
   pivot_longer(cols = -fecha, names_to = "variable", values_to = "valor", values_transform = list(valor = as.character))
 
 # Separar para graficar: una tabla para barras y otra para etiquetas
@@ -110,4 +111,5 @@ if (usar_coord_flip) {
 
 # Mostrar y guardar
 print(grafica)
-ggsave("rstudio/barras/barras.svg", plot = grafica, width = 12, height = 6, dpi = 300)
+svglite("rstudio/barras/barras.svg", width = 12, height = 6)
+ggsave("rstudio/barras/barras.png", plot = grafica, width = 12, height = 6, dpi = 300) # nolint

@@ -1,25 +1,15 @@
-#------------------------------------------------------------------------------#
-# Proyecto:                        Tree Map
-#
-# Responble: Tabata
-# Fecha de creación: 14 de abril de 2025 
-# Última actualización: 30 de abril de 2025
-#------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------
-
-
-#------------------------------------------------------------------------------#
-# 00. Configuración inicial ---------------------------------------------------#
-#------------------------------------------------------------------------------#
-
 # Librerías 
-require(pacman)
-pacman::p_load(tidyverse, sf, scales, biscale, cowplot, RColorBrewer, 
-               viridis, lubridate, showtext, treemapify)
-
-#------------------------------------------------------------------------------#
-#------------------------------------------------------------------------------#
-#------------------------------------------------------------------------------#
+library(tidyverse)
+library(sf)
+library(scales)
+library(biscale)
+library(cowplot)
+library(RColorBrewer)
+library(viridis)
+library(lubridate)
+library(showtext)
+library(treemapify)
+library(svglite)
 
 # Fuente 
 font_add_google("Poppins", "Poppins")
@@ -48,7 +38,7 @@ data <- data %>%
   )
 
 # Treemap
-ggplot(data, aes(area = total, fill = color, label = etiqueta)) +
+grafica <- ggplot(data, aes(area = total, fill = color, label = etiqueta)) +
   geom_treemap(color = "white", linewidth = 3) +
   geom_treemap_text(
     family = "Poppins", fontface = "bold", colour = "white",
@@ -57,3 +47,5 @@ ggplot(data, aes(area = total, fill = color, label = etiqueta)) +
   ) +
   scale_fill_identity() +
   theme_void()
+
+svglite("rstudio/treemap/treemap.svg", width = 12, height = 6)

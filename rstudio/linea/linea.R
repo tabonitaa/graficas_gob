@@ -1,31 +1,16 @@
-#------------------------------------------------------------------------------#
-# Proyecto:            Gráfica area plot
-#
-# Responble: Tabata
-# Fecha de creación: 10 de abril de 2025 
-# Última actualización:30 de abril de 2025
-#------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------
-
-# Relación:
-
-# 1. Tema - función ATDT
-# 2. Leer base de datos
-# 3. Ajustar formato de fecha
-# 4. Crear gráfica
-# 5. Exportar gráfica
-
-#-------------------------------------------------------------------------------
-# 00. Configuración inicial ---------------------------------------------------#
-#-------------------------------------------------------------------------------
-
 # Librerías 
-require(pacman)
-pacman::p_load(tidyverse, sf, scales, biscale, cowplot, RColorBrewer, 
-               viridis, lubridate, ggtext, readxl, showtext)
-# Librerías 
-require(pacman)
-pacman::p_load(tidyverse, sf, scales, readxl, lubridate, showtext)
+library(tidyverse)
+library(sf)
+library(scales)
+library(biscale)
+library(cowplot)
+library(RColorBrewer)
+library(viridis)
+library(lubridate)
+library(ggtext)
+library(readxl)
+library(showtext)
+library(svglite)
 
 # Colores estilo Python
 color_area <- "#d4dce9"        # área azul claro
@@ -54,16 +39,27 @@ tema_python_atdt <- function() {
     )
 }
 
-# Leer datos
-datos <- read_excel("/Users/tabatagarcia/Desktop/plantillas/rstudio/datos_graficas/SalarioMinimo.xlsx")
-datos$fecha <- as.Date(datos$fecha, format = "%Y-%m-%d")
+# Simular datos
+set.seed(123)
 
-# Línea de tendencia (modelo lineal)
+# Crear fechas mensuales desde enero 2015 hasta diciembre 2024
+fechas <- seq(as.Date("2015-01-01"), as.Date("2024-12-01"), by = "month")
+
+# Generar salarios mínimos simulados con una ligera tendencia creciente
+total_def <- round(70 + cumsum(rnorm(length(fechas), mean = 0.5, sd = 1.2)), 2)
+
+# Crear dataframe
+datos <- tibble(
+  fecha = fechas,
+  total_def = total_def
+)
+
+# Línea de tendencia
 modelo <- lm(total_def ~ fecha, data = datos)
 datos$tendencia <- predict(modelo)
 
 # Crear gráfica
-ggplot(datos, aes(x = fecha, y = total_def)) +
+linea <- ggplot(datos, aes(x = fecha, y = total_def)) +
   geom_area(fill = color_area, alpha = 1) +
   geom_line(color = color_linea, linewidth = 1.2) +
   geom_line(aes(y = tendencia), color = color_tendencia, linewidth = 1.2, linetype = "dashed") +
@@ -81,3 +77,5 @@ ggplot(datos, aes(x = fecha, y = total_def)) +
     y = NULL
   ) +
   tema_python_atdt()
+
+svglite("rstudio/linea/linea.svg", width = 12, height = 6)

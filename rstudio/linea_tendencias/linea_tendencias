@@ -12,9 +12,50 @@ library(writexl)
 library(extrafont) 
 library(ggrepel)
 library(ggplot2)
+library(svglite)
 
 options(scipen = 999)
 
+tema_atdt <- function() {
+  # sysfonts::font_add_google("Poppins", "Poppins") # Nota: Se puede cambiar por "Montserrat"
+  # showtext_auto()
+  
+  theme_linedraw() + 
+    theme(
+      # text = element_text(family = "Poppins", color = "grey35"),
+      # plot.title = element_text(size = 20, face = "bold", margin = margin(10, 4, 5, 4), 
+      #                           family = "Poppins", color = "black"),
+      # plot.subtitle = element_text(size = 16, face = "plain", color = "#666666", 
+      #                              margin = margin(5, 5, 5, 5), 
+      #                              family = "Poppins"),
+      # plot.caption = element_text(hjust = 0, size = 10, family = "Poppins"),
+      
+      # Solo líneas horizontales en el grid
+      panel.grid.major.x = element_blank(),  # Elimina líneas verticales mayores
+      panel.grid.minor.x = element_blank(),  # Elimina líneas verticales menores
+      panel.grid.major.y = element_line(linetype = 2),  # Mantiene líneas horizontales mayores
+      panel.grid.minor.y = element_blank(),
+      panel.background = element_rect(fill = "transparent", color = NA),
+      
+      # Ajuste del borde del panel a un gris más tenue
+      panel.border = element_rect(color = "#E5E5E5", fill = NA, size = 0.8),
+      
+      # Ocultar leyendas
+      legend.position = "none",
+      
+      # Ocultar solo los nombres de los ejes, pero mantener las etiquetas de valores
+      axis.title = element_blank(),
+      axis.text.x = element_text(size = 8, face = "bold", family = "Arial", 
+                                 vjust = 0.5, hjust = 1, color = "#767676"),  # Negrita y rotación en eje X
+      axis.text.y = element_text(size = 8, face = "bold", family = "Arial",
+                                 color = "#767676"),  
+      axis.ticks = element_blank(),
+      
+      strip.background = element_rect(fill = "#525252"),
+      strip.text.x = element_text(size = 8, face = "bold", family = "Arial"),
+      strip.text.y = element_text(size = 8, face = "bold", family = "Arial")
+    )
+}
 
 # Crear datos simulados
 set.seed(123)
@@ -45,10 +86,6 @@ precios_filtrados <- do.call(rbind, lapply(countries, function(pais) {
 precios_filtrados <- precios_filtrados %>%
   mutate(color_entidad = ifelse(entity_name == "México", "México", "Otras"))
 
-
-source("tema_agencia_lineas (2).R")
-
-
 precios_filtrados %<>%
   mutate(color_entidad = ifelse(entity_name == "México", "México", "Otras"))
 
@@ -68,6 +105,4 @@ g1_clean <- ggplot(precios_filtrados, aes(x = data_year, y = data_value, group =
     legend.box.background = element_rect(fill = "transparent")
   )
 
-
-ggsave("bar_chart.png", g1_clean, bg = "transparent", width = 1800 / 300, height = 450 / 300, dpi = 300)
-# ggsave(filename = "bar_chart.svg", plot = g1_clean, width = 15, height = 7, device = "svg")
+svglite("rstudio/linea_tendencias/bar_chart.svg", width = 15, height = 7)

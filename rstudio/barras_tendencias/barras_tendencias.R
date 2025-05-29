@@ -3,6 +3,7 @@ library(lubridate)
 library(ggplot2)
 library(svglite)
 library(systemfonts)
+library(svglite)
 
 # Crear fechas mensuales
 fecha <- seq(as.Date("2010-01-01"), as.Date("2025-01-01"), by = "months")
@@ -62,12 +63,8 @@ grafica <- ggplot(datos_sum, aes(x = mes, y = valor, fill = indicador)) +
 
 grafica
 
-# Crear carpeta
-dir.create("~/Desktop/plantillas/rstudio/barras_tendencias", recursive = TRUE, showWarnings = FALSE)
-
 # Guardar archivos
-ggsave("~/Desktop/plantillas/rstudio/barras_tendencias/barras_tendencias.png",
+ggsave("rstudio/barras_tendencias/barras_tendencias.png",
        plot = grafica, width = 10, height = 5, dpi = 300)
 
-ggsave("~/Desktop/plantillas/rstudio/barras_tendencias/barras_tendencias.svg",
-       plot = grafica, width = 10, height = 5, dpi = 300)
+svglite("rstudio/barras_tendencias/barras_tendencias.svg", width = 10, height = 5)

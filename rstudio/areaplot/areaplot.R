@@ -76,4 +76,4 @@ print(grafica)
 
 # Guardar
 svglite("rstudio/areaplot/areaplot.svg", width = 12, height = 6)
-ggsave("rstudio/areaplot/areaplot.png", plot = grafica, width = 12, height = 6, dpi = 300)
+ggsave("rstudio/areaplot/areaplot.png", plot = grafica, width = 12, height = 6, dpi = 300) # nolint

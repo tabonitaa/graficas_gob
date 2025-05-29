@@ -3,6 +3,7 @@ library(tidyverse)
 library(scales)
 library(lubridate)
 library(forcats)
+library(svglite)
 
 # Activar orientación horizontal (TRUE) o vertical (FALSE)
 usar_coord_flip <- FALSE
@@ -127,4 +128,4 @@ print(grafica)
 
 
 # Guardar el gráfico
-ggsave("rstudio/barras_apiladas/barras_apiladas.svg", plot = grafica, width = 12, height = 6, dpi = 300)
+svglite("rstudio/barras_apiladas/barras_apiladas.svg", width = 12, height = 6)
