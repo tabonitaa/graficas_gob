@@ -2,6 +2,7 @@ library(tidyverse)
 library(scales)
 library(ggtext)
 library(showtext)
+library(svglite)
 library(sysfonts)
 
 # Fuente Poppins desde Google
@@ -74,5 +75,5 @@ grafica <- ggplot(df, aes(x = fecha, y = pct, fill = fuente)) +
 print(grafica)
 
 # Guardar
-ggsave("rstudio/areaplot/areaplot.svg", plot = grafica, width = 12, height = 6, dpi = 300)
+svglite("rstudio/areaplot/areaplot.svg", width = 12, height = 6)
 ggsave("rstudio/areaplot/areaplot.png", plot = grafica, width = 12, height = 6, dpi = 300)
