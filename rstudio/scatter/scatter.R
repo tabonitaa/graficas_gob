@@ -1,25 +1,15 @@
-#------------------------------------------------------------------------------#
-# Proyecto:                        Scatter plot
-#
-# Responble: Tabata
-# Fecha de creación: 14 de abril de 2025 
-# Última actualización: 30 de abril de 2025
-#------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------
-
-
-#------------------------------------------------------------------------------#
-# 00. Configuración inicial ---------------------------------------------------#
-#------------------------------------------------------------------------------#
-
-# Librerías 
-require(pacman)
-pacman::p_load(tidyverse, sf, scales, biscale, cowplot, RColorBrewer, 
-               viridis, lubridate, showtext, ggrepel)
-
-#------------------------------------------------------------------------------#
-#------------------------------------------------------------------------------#
-#------------------------------------------------------------------------------#
+# Librerías
+library(tidyverse)
+library(sf)
+library(scales)
+library(biscale)
+library(cowplot)
+library(RColorBrewer)
+library(viridis)
+library(lubridate)
+library(showtext)
+library(ggrepel)
+library(hrbrthemes)
 
 # Simular datos
 set.seed(42)
@@ -54,27 +44,28 @@ colores <- c(
 
 # Gráfica
 graf5 <- ggplot(sim_mun, aes(x = promedio_diario_2023_2024, y = promedio_diario_2024_2025)) +
-  geom_abline(slope = 1, intercept = 0, color = "#9D792A", linetype = "dashed") +
+  geom_abline(slope = 1, intercept = 0, color = "#9D792A", linewidth = 1.2) +
   geom_point(aes(color = color_cat, alpha = alpha_cat, size = size_cat), shape = 16) +
-  geom_vline(xintercept = 0, color = "gray30", linewidth = 0.4) +
-  geom_hline(yintercept = 0, color = "gray30", linewidth = 0.4) +
   geom_text_repel(
-    data = sim_mun %>% filter(is_culiacan),  # Solo etiqueta a Culiacán
+    data = subset(sim_mun, is_culiacan),
     aes(label = cve_municipio),
-    family = "Poppins", fontface = "bold", size = 3.5,
-    box.padding = 0.4, max.overlaps = 10
+    family = "Poppins", fontface = "bold", size = 3.5
   ) +
   scale_color_manual(values = colores) +
   scale_alpha_identity() +
   scale_size_identity() +
-  scale_x_continuous(limits = c(lim_min, lim_max), labels = comma_format()) +
-  scale_y_continuous(limits = c(lim_min, lim_max), labels = comma_format()) +
-  tema_estilo_multilinea() +
+  scale_x_continuous(labels = comma_format(), limits = c(lim_min, lim_max)) +
+  scale_y_continuous(labels = comma_format(), limits = c(lim_min, lim_max)) +
+  coord_equal() +
+  labs(x = NULL, y = NULL) +
+  theme_ipsum(base_family = "Poppins") +
   theme(
     legend.position = "none",
-    plot.margin = margin(10, 10, 10, 10),
-      axis.text.x = element_text(angle = 0, vjust = 1, hjust = 1)
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "#F9F9F9", color = NA)
   )
 
-# Mostrar
+svglite("rstudio/scatter/scatter.svg", width = 12, height = 6)
 print(graf5)
+dev.off()
+

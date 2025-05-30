@@ -68,3 +68,5 @@ ggsave("rstudio/barras_tendencias/barras_tendencias.png",
        plot = grafica, width = 10, height = 5, dpi = 300)
 
 svglite("rstudio/barras_tendencias/barras_tendencias.svg", width = 10, height = 5)
+print(grafica)
+dev.off()

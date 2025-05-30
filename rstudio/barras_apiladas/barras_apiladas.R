@@ -129,3 +129,5 @@ print(grafica)
 
 # Guardar el gráfico
 svglite("rstudio/barras_apiladas/barras_apiladas.svg", width = 12, height = 6)
+print(grafica)
+dev.off() 

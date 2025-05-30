@@ -106,3 +106,5 @@ g1_clean <- ggplot(precios_filtrados, aes(x = data_year, y = data_value, group =
   )
 
 svglite("rstudio/linea_tendencias/bar_chart.svg", width = 15, height = 7)
+print(g1_clean)
+dev.off()

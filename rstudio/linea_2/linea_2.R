@@ -95,7 +95,6 @@ grafica <- ggplot(datos, aes(x = fecha)) +
   scale_y_continuous(labels = dollar_format()) +
   tema_estilo_multilinea()
 
-# Mostrar
-print(grafica)
-
 svglite("rstudio/linea_2/linea_2.svg", width = 12, height = 6)
+print(grafica)
+dev.off()

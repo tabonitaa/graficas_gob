@@ -70,3 +70,5 @@ grafica <- ggplot(df_largo, aes(x = Fecha, y = valor, color = variable)) +
   theme(axis.title.x = element_blank(), axis.title.y = element_blank())
 
 svglite("rstudio/multilineas/multilinea.svg", width = 12, height = 6)
+print(grafica)
+dev.off()

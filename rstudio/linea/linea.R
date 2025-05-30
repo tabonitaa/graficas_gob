@@ -79,3 +79,5 @@ linea <- ggplot(datos, aes(x = fecha, y = total_def)) +
   tema_python_atdt()
 
 svglite("rstudio/linea/linea.svg", width = 12, height = 6)
+print(linea)
+dev.off()

@@ -109,7 +109,6 @@ if (usar_coord_flip) {
   grafica <- grafica + coord_flip()
 }
 
-# Mostrar y guardar
-print(grafica)
 svglite("rstudio/barras/barras.svg", width = 12, height = 6)
-ggsave("rstudio/barras/barras.png", plot = grafica, width = 12, height = 6, dpi = 300) # nolint
+print(grafica)
+dev.off()

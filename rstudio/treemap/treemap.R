@@ -49,3 +49,5 @@ grafica <- ggplot(data, aes(area = total, fill = color, label = etiqueta)) +
   theme_void()
 
 svglite("rstudio/treemap/treemap.svg", width = 12, height = 6)
+print(grafica)
+dev.off()
