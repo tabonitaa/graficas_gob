@@ -1,30 +1,20 @@
-#------------------------------------------------------------------------------#
-# Proyecto:                       Steps
-#
-# Responble: Tabata
-# Fecha de creación: 3 de abril de 2025 
-# Última actualización: 30 de abril de 2025
-#------------------------------------------------------------------------------#
-#-------------------------------------------------------------------------------
-
-
-#------------------------------------------------------------------------------#
-# 00. Configuración inicial ---------------------------------------------------#
-#------------------------------------------------------------------------------#
-
 # Librerías 
-require(pacman)
-pacman::p_load(tidyverse, sf, scales, biscale, cowplot, RColorBrewer, 
-               viridis, lubridate, showtext)
-# Librerías
-require(pacman)
-pacman::p_load(tidyverse, lubridate, showtext, scales)
+library(tidyverse)
+library(sf)
+library(scales)
+library(biscale)
+library(cowplot)
+library(RColorBrewer)
+library(viridis)
+library(lubridate)
+library(showtext)
+library(svglite)
 
 # Fuente y estilo
 font_add("Poppins", "/Users/tabatagarcia/Desktop/plantillas/python/agrupadasyapiladas/fonts/poppins/Poppins-Regular.ttf")
 showtext_auto()
 
-# Tema limpio tipo matplotlib
+# Tema
 tema_python_atdt_2 <- function() {
   theme_minimal(base_family = "Poppins") +
     theme(
